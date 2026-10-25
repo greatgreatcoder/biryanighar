@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Menu — Biryani Ghar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+
+/* Palette sampled from the sample site: near-black, white text, olive logo, golden info glow */
+:root{color-scheme:light;--bg:#F7F4EC;--bg2:#040404;--card:#161614;--ink:#fdfcf8;--dim:#f3f0e9;--olive:#e89026;--gold:#c96619;--line:rgb(255 255 255);
+--disp:'Cormorant Garamond',Georgia,serif;--sans:Inter,system-ui,sans-serif;--e:cubic-bezier(.22,.61,.36,1);--gut:clamp(20px,6vw,100px)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:#F7F4EC;color:var(--ink);font:300 1rem/1.7 var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+img{display:block;max-width:100%;height:auto}a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:var(--disp);font-weight:400;line-height:1}
+::selection{background:rgba(201,102,25,.35);color:#fff}
+.wrap{max-width:1400px;margin:0 auto;padding:0 var(--gut)}
+section{padding-block:clamp(70px,9vw,130px);position:relative}
+/* section heading: "Discover" + title, like the sample */
+.kick{display:inline-block;font:400 .68rem var(--sans);text-transform:uppercase;letter-spacing:.35em;padding-bottom:8px;border-bottom:1px solid var(--olive);margin-bottom:14px}
+.h2{font-size:clamp(2.3rem,5vw,4rem);margin-bottom:26px}
+.btn{display:inline-flex;align-items:center;gap:.6em;padding:1.1em 2.3em;border:1px solid var(--ink);border-radius:8px;font:500 .72rem var(--sans);text-transform:uppercase;letter-spacing:.2em;color:var(--ink);background:none;cursor:pointer;transition:background .4s,color .4s,border-color .4s,transform .5s var(--e)}
+.btn:hover{background:var(--gold);border-color:var(--gold);color:#040404;transform:translateY(-3px)}
+.ul{display:inline-block;font-size:.72rem;font-weight:500;text-transform:uppercase;letter-spacing:.2em;padding-bottom:5px;border-bottom:1px solid var(--gold);transition:color .3s}.ul:hover{color:var(--gold)}
+.rv{opacity:0;transform:translateY(34px);transition:opacity 1s var(--e),transform 1s var(--e)}.rv.in{opacity:1;transform:none}
+/* nav */
+nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;justify-content:space-between;align-items:center;padding:calc(22px + env(safe-area-inset-top,0px)) var(--gut) 22px;transition:background .5s,padding .5s}
+nav.s{background:rgba(247,244,236,.94);backdrop-filter:blur(8px);border-bottom:1px solid rgba(59,13,17,.12);color:#3b0d11;padding-top:calc(14px + env(safe-area-inset-top,0px));padding-bottom:14px}
+nav b{font:500 1.4rem var(--disp);color:var(--olive);letter-spacing:.3em;text-transform:uppercase}
+nav.s .links a{color:#3b0d11}nav.s .btn{border-color:#3b0d11}nav.s .btn:hover{color:#040404}nav.s b{color:var(--gold)}
+nav .links{display:flex;gap:clamp(18px,3vw,40px);align-items:center;font-size:.7rem;font-weight:500;text-transform:uppercase;letter-spacing:.25em}
+nav .links a{position:relative}nav .links a::after{content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;background:var(--gold);transition:width .4s var(--e)}nav .links a:hover::after{width:100%}
+@media(max-width:820px){nav .links a:not(.btn){display:none}}
+/* footer */
+footer{background:#F3ECD6;padding:100px 0 40px;border-top:1px solid rgba(59,13,17,.12)}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:48px}
+footer h3{font:500 .7rem Inter,sans-serif;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+footer p,footer a{color:#3b0d11;text-decoration:none;display:block}footer a:hover{color:var(--gold)}
+.big{font:400 clamp(3rem,16vw,15rem)/.9 'Cormorant Garamond',serif;text-align:center;margin:90px 0 24px;color:rgba(59,13,17,.09);text-transform:uppercase;letter-spacing:-.02em}
+.copy{text-align:center;font-size:.72rem;color:#7a6b66;letter-spacing:.15em}
+.copy a.adm{display:inline;color:inherit;text-decoration:underline;text-underline-offset:3px}
+/* cursor (unchanged behaviour) */
+#hand{position:fixed;left:0;top:0;width:48px;height:48px;pointer-events:none;z-index:9999;opacity:0;will-change:transform;contain:layout paint style}
+#hand.on{opacity:1}
+#hand .i{width:100%;height:100%;background:url(https://res.cloudinary.com/cowoq8sh/image/upload/v1790973495/cursor-hover_bwrtgw.png) center/contain no-repeat;transform-origin:50% 8%;transition:transform .08s ease-out}
+#hand.hover .i{background-image:url(https://res.cloudinary.com/cowoq8sh/image/upload/v1790973486/cursor-default_ipd8wv.png)}
+#hand.down .i{transform:scale(.85)}
+@media(hover:hover) and (pointer:fine){html.custom,html.custom *{cursor:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.story .w{opacity:1}.hero h1 .l i{transform:none}.hero .row{opacity:1}}
+
+/* ===== menu page ===== */
+:root{--red:#A31F2A;--mar:#3b0d11;--y:#FFEF3F;--cream:#F3ECD6;--mut:#6e5a5b;--sf:'Fraunces',Georgia,serif}
+body{color:var(--mar)}
+html{scroll-padding-top:150px}
+.pg{position:relative;margin:clamp(78px,9vw,100px) clamp(10px,2.4vw,34px) 0;padding:clamp(34px,4vw,50px) clamp(18px,4.4vw,62px) clamp(44px,6vw,80px);color:var(--red)}
+.pg::before{content:"";position:absolute;inset:clamp(8px,1.6vw,22px);border:1.5px solid var(--red);pointer-events:none}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:relative}
+.bd{width:70px;height:70px;border-radius:50%;background:var(--red);color:#fff;display:grid;place-items:center;font:italic 500 .95rem var(--sf)}
+.lg{border:2px solid var(--red);padding:8px clamp(14px,3vw,34px);text-align:center;font:600 clamp(1.05rem,2.4vw,1.8rem)/1.15 var(--sf);letter-spacing:.06em;text-transform:uppercase;background:#F7F4EC}.lg small{display:block;font:italic 400 .8rem var(--sf);letter-spacing:0;text-transform:none}
+.rs{border:1.5px solid var(--red);border-radius:50%;padding:12px 26px;font:italic 500 1rem var(--sf);transform:rotate(-4deg);margin-top:8px;transition:background .3s,color .3s}.rs:hover{background:var(--y);color:var(--mar)}
+.tt{display:flex;align-items:center;gap:clamp(14px,3vw,30px);margin:clamp(24px,4vw,46px) 0 12px}.tt hr{flex:1;border:0;border-top:1.5px solid var(--red);opacity:.55}
+.tt h1{font:400 clamp(4.2rem,17vw,12.5rem)/1 var(--sf);letter-spacing:-.04em;color:var(--red)}
+.tag{text-align:center;color:var(--mut);font-size:clamp(.9rem,1.6vw,1.05rem)}
+.tabs{position:sticky;top:64px;z-index:20;display:flex;justify-content:center;gap:10px;margin:28px 0 36px;padding:12px 0;flex-wrap:wrap;background:linear-gradient(#F7F4EC 75%,rgba(247,244,236,0))}
+.chip{padding:.55em 1.3em;border:1.5px solid var(--red);border-radius:999px;background:none;color:var(--red);font:600 .72rem var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .25s,color .25s}
+.chip:hover,.chip.on{background:var(--y);color:var(--mar)}
+.board{background:#fff;border-radius:26px;padding:clamp(24px,4vw,46px) clamp(20px,4.4vw,54px);column-count:2;column-gap:clamp(36px,6vw,80px);border:1px solid #ece4d3;box-shadow:0 24px 60px -34px rgba(59,13,17,.35)}
+.spc{break-inside:avoid;background:radial-gradient(circle at 85% 0,#c2303c,var(--red) 60%);color:#fff;border-radius:22px;padding:30px 32px;margin-bottom:40px}
+.spc em{font:600 .68rem var(--sans);font-style:normal;letter-spacing:.25em;text-transform:uppercase;color:var(--y)}
+.spc h2{font:italic 500 clamp(1.7rem,3vw,2.2rem)/1.15 var(--sf);margin:10px 0 16px}.spc b{display:block;font:700 .8rem var(--sans);letter-spacing:.08em;margin-bottom:8px}
+.spc p{font-size:.74rem;line-height:1.7;text-transform:uppercase;letter-spacing:.04em;max-width:430px;opacity:.92}
+.spc .p2{display:inline-block;margin-top:16px;background:var(--y);color:var(--mar);border-radius:999px;padding:5px 16px;font:700 .78rem var(--sans)}
+.sec{break-inside:avoid;margin-bottom:44px}.ico{width:46px;height:46px;margin-bottom:6px}.ico svg{width:100%;height:100%;fill:none;stroke:var(--red);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sec h3{font:400 clamp(1.7rem,3vw,2.3rem)/1.1 var(--sf);color:var(--red);margin-bottom:18px}
+.r{break-inside:avoid;display:flex;align-items:center;gap:12px;margin-bottom:15px;font:700 .82rem var(--sans);letter-spacing:.03em;text-transform:uppercase;color:var(--red)}
+.r i{flex:1;min-width:14px;border-top:1.5px dotted rgba(163,31,42,.4);height:0}.r .n{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.r .p{border:1.5px solid var(--red);border-radius:999px;padding:4px 12px;font-size:.74rem;white-space:nowrap;transition:background .25s,color .25s}.r:hover .p{background:var(--y);color:var(--mar)}
+.vg{background:var(--red);color:#fff;border-radius:999px;padding:3px 10px;font-size:.62rem;letter-spacing:.06em}
+.board.solo{column-count:1}.board.solo .list{column-count:2;column-gap:clamp(36px,6vw,80px)}.board.solo .spc{display:none}
+.sec[hidden]{display:none}
+.bk{margin-top:clamp(50px,7vw,90px);border-top:9px dotted rgba(163,31,42,.28);padding-top:clamp(30px,5vw,50px)}
+.bk h2{font:400 clamp(3.4rem,11vw,8.5rem)/1 var(--sf);letter-spacing:-.04em;color:var(--red)}
+.fm{display:grid;grid-template-columns:repeat(5,1fr) auto;gap:14px;margin-top:34px;align-items:end}
+.fm label{display:block;background:#EFE9DA;border-radius:8px;padding:12px 14px;font:italic 500 .8rem var(--sf);color:var(--red)}
+.fm input,.fm select{display:block;width:100%;margin-top:6px;background:none;border:0;outline:0;font:400 .85rem var(--sans);color:var(--mar)}
+.pb{display:inline-flex;align-items:center;justify-content:center;padding:1em 2em;border-radius:999px;background:var(--red);color:#fff;border:1.5px solid var(--red);font:600 .8rem var(--sans);letter-spacing:.06em;cursor:pointer;transition:background .3s,color .3s,transform .4s var(--e)}.pb:hover{background:var(--y);color:var(--mar);transform:translateY(-2px)}
+#ok{display:none;margin-top:26px;font:500 1.5rem var(--sf);color:var(--red)}
+nav.s .links a.cur::after{width:100%}
+footer{margin-top:clamp(40px,6vw,80px)}
+@media(max-width:800px){.board{column-count:1}.board.solo .list{column-count:1}.fm{grid-template-columns:1fr 1fr}.fm .pb,.fm .wd{grid-column:1/-1}.bd{width:54px;height:54px;font-size:.8rem}.tabs{top:58px}}
+
+</style>
+</head>
+<body>
+<nav id="nav" class="s"><b>Biryani Ghar</b><div class="links"><a data-home="#top" href="biryani-ghar-v8.html">Home</a><a data-home="#about" href="biryani-ghar-v8.html#about">About Us</a><a class="cur" href="#top">Menu</a><a data-home="#ambiance" href="biryani-ghar-v8.html#ambiance">Gallery</a><a data-home="#reviews" href="biryani-ghar-v8.html#reviews">Contacts</a><a class="btn" href="#book">Reservation</a></div></nav>
+
+<main class="pg" id="top">
+  <div class="top"><div class="bd">MENU</div><div class="lg">Biryani Ghar<small>Restaurant</small></div><a class="rs" href="#book">RESERVE</a></div>
+  <div class="tt"><hr><h1>MENU</h1><hr></div>
+  <p class="tag">Slow-cooked by hand, served with love, eaten with joy</p>
+  <div class="tabs" id="tabs"><button class="chip on" data-f="all">All</button><button class="chip" data-f="biryani">Biryani</button><button class="chip" data-f="kebabs">Kebabs</button><button class="chip" data-f="curries">Curries</button><button class="chip" data-f="sides">Sides</button><button class="chip" data-f="desserts">Desserts</button><button class="chip" data-f="drinks">Drinks</button></div>
+  <div class="board" id="board">
+    <!-- Chef's special: edit the text, or delete this block -->
+    <div class="spc" id="spc"><em>Chef's special of the month</em><h2>Zafrani Handi Biryani</h2><b>NEW</b><p>Saffron-laced basmati layered with slow-braised mutton, caramelised onions and whole spices, sealed and cooked dum.</p><span class="p2">₹549</span></div>
+    <!-- Each dish is one line: name, then price. Add class "vg" tag for vegetarian. Copy a line to add a dish. -->
+<div class="sec" id="biryani" data-cat="biryani"><div class="ico"><svg viewBox="0 0 48 48"><path d="M8 20h32v4c0 9-7 16-16 16S8 33 8 24z"/><path d="M6 20h36M18 14c0-4 4-4 4-8M27 14c0-4 4-4 4-8"/></svg></div><h3>Dum Biryani</h3><div class="list"><div class="r"><span class="n">Chicken Dum Biryani</span><i></i><span class="p">₹349</span></div><div class="r"><span class="n">Mutton Dum Biryani</span><i></i><span class="p">₹449</span></div><div class="r"><span class="n">Veg Dum Biryani<span class="vg">VEG</span></span><i></i><span class="p">₹299</span></div><div class="r"><span class="n">Egg Biryani</span><i></i><span class="p">₹279</span></div><div class="r"><span class="n">Prawn Biryani</span><i></i><span class="p">₹499</span></div><div class="r"><span class="n">Paneer Tikka Biryani<span class="vg">VEG</span></span><i></i><span class="p">₹329</span></div><div class="r"><span class="n">Hyderabadi Special Biryani</span><i></i><span class="p">₹429</span></div></div></div>
+<div class="sec" id="kebabs" data-cat="kebabs"><div class="ico"><svg viewBox="0 0 48 48"><path d="M6 42L42 6"/><circle cx="18" cy="30" r="5"/><circle cx="26" cy="22" r="5"/><circle cx="34" cy="14" r="5"/></svg></div><h3>Kebabs & Tikkas</h3><div class="list"><div class="r"><span class="n">Seekh Kebab</span><i></i><span class="p">₹299</span></div><div class="r"><span class="n">Chicken Tikka</span><i></i><span class="p">₹329</span></div><div class="r"><span class="n">Malai Tikka</span><i></i><span class="p">₹349</span></div><div class="r"><span class="n">Hara Bhara Kebab<span class="vg">VEG</span></span><i></i><span class="p">₹249</span></div><div class="r"><span class="n">Paneer Tikka<span class="vg">VEG</span></span><i></i><span class="p">₹279</span></div><div class="r"><span class="n">Mutton Galouti</span><i></i><span class="p">₹399</span></div><div class="r"><span class="n">Tandoori Platter</span><i></i><span class="p">₹649</span></div></div></div>
+<div class="sec" id="curries" data-cat="curries"><div class="ico"><svg viewBox="0 0 48 48"><path d="M6 22h36c0 10-8 18-18 18S6 32 6 22z"/><path d="M14 16c0-3 3-3 3-6M24 16c0-3 3-3 3-6M33 16c0-3 3-3 3-6"/></svg></div><h3>Curries</h3><div class="list"><div class="r"><span class="n">Butter Chicken</span><i></i><span class="p">₹379</span></div><div class="r"><span class="n">Mutton Rogan Josh</span><i></i><span class="p">₹459</span></div><div class="r"><span class="n">Dal Makhani<span class="vg">VEG</span></span><i></i><span class="p">₹269</span></div><div class="r"><span class="n">Paneer Butter Masala<span class="vg">VEG</span></span><i></i><span class="p">₹329</span></div><div class="r"><span class="n">Chicken Korma</span><i></i><span class="p">₹359</span></div><div class="r"><span class="n">Kadhai Paneer<span class="vg">VEG</span></span><i></i><span class="p">₹319</span></div></div></div>
+<div class="sec" id="sides" data-cat="sides"><div class="ico"><svg viewBox="0 0 48 48"><ellipse cx="24" cy="26" rx="18" ry="12"/><path d="M14 24c4-4 7 0 10-3s6 1 10-1M15 30c4-3 8 1 12-1"/></svg></div><h3>Breads & Sides</h3><div class="list"><div class="r"><span class="n">Butter Naan<span class="vg">VEG</span></span><i></i><span class="p">₹59</span></div><div class="r"><span class="n">Garlic Naan<span class="vg">VEG</span></span><i></i><span class="p">₹79</span></div><div class="r"><span class="n">Tandoori Roti<span class="vg">VEG</span></span><i></i><span class="p">₹39</span></div><div class="r"><span class="n">Boondi Raita<span class="vg">VEG</span></span><i></i><span class="p">₹89</span></div><div class="r"><span class="n">Mirchi ka Salan<span class="vg">VEG</span></span><i></i><span class="p">₹99</span></div><div class="r"><span class="n">Onion Salad<span class="vg">VEG</span></span><i></i><span class="p">₹49</span></div></div></div>
+<div class="sec" id="desserts" data-cat="desserts"><div class="ico"><svg viewBox="0 0 48 48"><path d="M8 26h32v14H8zM8 32h32"/><path d="M14 26v-6M24 26v-6M34 26v-6M14 15v-2M24 15v-2M34 15v-2"/></svg></div><h3>Desserts</h3><div class="list"><div class="r"><span class="n">Gulab Jamun<span class="vg">VEG</span></span><i></i><span class="p">₹149</span></div><div class="r"><span class="n">Phirni<span class="vg">VEG</span></span><i></i><span class="p">₹129</span></div><div class="r"><span class="n">Shahi Tukda<span class="vg">VEG</span></span><i></i><span class="p">₹169</span></div><div class="r"><span class="n">Double ka Meetha<span class="vg">VEG</span></span><i></i><span class="p">₹159</span></div><div class="r"><span class="n">Kulfi Falooda<span class="vg">VEG</span></span><i></i><span class="p">₹179</span></div></div></div>
+<div class="sec" id="drinks" data-cat="drinks"><div class="ico"><svg viewBox="0 0 48 48"><path d="M10 12h26l-3 26H13z"/><path d="M36 18h5c2 0 2 8-2 8h-4M12 20h22"/></svg></div><h3>Drinks</h3><div class="list"><div class="r"><span class="n">Masala Chaas<span class="vg">VEG</span></span><i></i><span class="p">₹69</span></div><div class="r"><span class="n">Sweet Lassi<span class="vg">VEG</span></span><i></i><span class="p">₹89</span></div><div class="r"><span class="n">Rose Sharbat<span class="vg">VEG</span></span><i></i><span class="p">₹79</span></div><div class="r"><span class="n">Fresh Lime Soda<span class="vg">VEG</span></span><i></i><span class="p">₹79</span></div><div class="r"><span class="n">Masala Chai<span class="vg">VEG</span></span><i></i><span class="p">₹49</span></div><div class="r"><span class="n">Soft Drinks<span class="vg">VEG</span></span><i></i><span class="p">₹60</span></div></div></div>
+  </div>
+  <div class="bk" id="book">
+    <h2 class="rv">BOOK NOW</h2>
+    <form class="fm rv" id="f">
+      <label>Name<input type="text" placeholder="Your name" required></label>
+      <label>Phone<input type="tel" placeholder="+91 00000 00000" required></label>
+      <label>Guests<select><option>2 persons</option><option>3 persons</option><option>4 persons</option><option>5+ persons</option></select></label>
+      <label>Date<input type="date" required></label>
+      <label>Time<select><option>7:00 pm</option><option>8:00 pm</option><option>9:00 pm</option></select></label>
+      <button class="pb" type="submit">Reserve</button>
+    </form>
+    <p id="ok">Thank you. We will confirm your table shortly.</p>
+  </div>
+</main>
+
+<footer><div class="wrap">
+  <div class="fg">
+    <div><h3>Visit</h3><p>Your address here<br>City, State, PIN</p></div>
+    <div><h3>Hours</h3><p>Mon–Sun<br>12:00 pm – 11:00 pm</p></div>
+    <div><h3>Contact</h3><a href="tel:+910000000000" data-link="phone">+91 00000 00000</a><a href="#book">Reserve online</a></div>
+    <div><h3>Follow</h3><a href="#" data-link="instagram">Instagram</a><a href="#" data-link="facebook">Facebook</a><a href="#" data-link="maps">Google Maps</a></div>
+  </div>
+  <div class="big">Biryani Ghar</div>
+  <div class="copy">© Biryani Ghar · All rights reserved · <a class="adm" href="admin.html">Admin</a></div>
+</div></footer>
+
+<div id="hand"><div class="i"></div></div>
+
+<script src="js/store.js"></script>
+<script>
+/* ===================== EDIT YOUR LINKS HERE =====================
+   home: the file name of your main page (the links in the top bar use it)
+   Other links work the same as on the main page. Leave '' to keep the placeholder. */
+var LINKS={
+  home:'biryani-ghar-v8.html',
+  instagram:'',
+  facebook:'',
+  maps:'',
+  phone:''
+};
+/* ================================================================= */
+(function(){
+'use strict';
+var d=document,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $=function(s,r){return(r||d).querySelector(s)},$$=function(s,r){return[].slice.call((r||d).querySelectorAll(s))};
+/* reveal */
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.16,rootMargin:'0px 0px -8% 0px'});
+$$('.rv').forEach(function(el){reduce?el.classList.add('in'):io.observe(el)});
+/* category filter */
+var board=$('#board'),secs=$$('.sec',board);
+$$('#tabs .chip').forEach(function(c){c.addEventListener('click',function(){var f=c.dataset.f;
+ $$('#tabs .chip').forEach(function(x){x.classList.toggle('on',x===c)});
+ board.classList.toggle('solo',f!=='all');
+ secs.forEach(function(s){s.hidden=!(f==='all'||s.dataset.cat===f)});
+ var t=$('#tabs').getBoundingClientRect().bottom;if(t<0||scrollY>0&&board.getBoundingClientRect().top<0)board.scrollIntoView({block:'start'})})});
+/* links */
+$$('[data-home]').forEach(function(a){a.href=LINKS.home+(a.dataset.home==='#top'?'':a.dataset.home)});
+$$('[data-link]').forEach(function(a){var k=a.dataset.link,u=LINKS[k];
+ if(u){if(k==='phone')u='tel:'+u;a.href=u;if(k!=='phone'){a.target='_blank';a.rel='noopener'}}
+ else if(k!=='phone')a.addEventListener('click',function(e){e.preventDefault()})});
+/* form */
+$('#f').addEventListener('submit',function(e){e.preventDefault();this.style.display='none';$('#ok').style.display='block'});
+/* hand cursor (same as main page) */
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+ var hand=$('#hand'),root=d.documentElement,HX=24,HY=3,sel='a,button,input,select,textarea,label,summary,[role=button],[data-hover]';
+ root.classList.add('custom');
+ ['https://res.cloudinary.com/cowoq8sh/image/upload/v1790973495/cursor-hover_bwrtgw.png','https://res.cloudinary.com/cowoq8sh/image/upload/v1790973486/cursor-default_ipd8wv.png'].forEach(function(u){new Image().src=u});
+ d.addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;hand.style.transform='translate3d('+(e.clientX-HX)+'px,'+(e.clientY-HY)+'px,0)';hand.classList.add('on')},{passive:true});
+ d.addEventListener('mouseover',function(e){hand.classList.toggle('hover',!!e.target.closest(sel))},{passive:true});
+ d.addEventListener('pointerdown',function(){hand.classList.add('down')},{passive:true});
+ d.addEventListener('pointerup',function(){hand.classList.remove('down')},{passive:true});
+ root.addEventListener('mouseleave',function(){hand.classList.remove('on')});
+}
+})();
+</script>
+</body>
+</html>

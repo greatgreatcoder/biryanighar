@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Biryani Ghar — Admin Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F4EC;--card:#fff;--ink:#3b0d11;--mut:#6e5a5b;--line:#e3d9c4;--red:#A31F2A;--y:#FFEF3F;--lb:#EFE9DA;--chip:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1b0b0d;--card:#2a1316;--ink:#f3ecd6;--mut:#cdb9ae;--line:#4a2a2d;--red:#ff8d94;--lb:#3a1c20;--chip:#2a1316}}
+:root[data-theme="dark"]{--bg:#1b0b0d;--card:#2a1316;--ink:#f3ecd6;--mut:#cdb9ae;--line:#4a2a2d;--red:#ff8d94;--lb:#3a1c20;--chip:#2a1316}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:400 15px/1.5 Inter,system-ui,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:16px 20px;border-bottom:1px solid var(--line)}
+.top b{display:block;font:500 22px 'Cormorant Garamond',Georgia,serif;letter-spacing:.3em;text-transform:uppercase;color:var(--red)}
+.top small{display:block;font-size:13px;color:var(--mut);max-width:60ch}
+.acts{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:500}
+.btn:hover,.btn.on{background:var(--y);color:#3b0d11;border-color:#ddcf00}
+.btn.on{font-weight:600}
+.sw{display:none;gap:8px;padding:12px 20px 0}
+.app{display:grid;grid-template-columns:minmax(340px,470px) minmax(0,1fr);gap:20px;padding:20px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px;min-width:0}
+.card h2{margin:0 0 4px;font:500 26px/1.15 Fraunces,Georgia,serif;color:var(--red)}
+.note{margin:0 0 14px;font-size:13px;color:var(--mut)}
+.nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.rw{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;padding:12px 0;border-bottom:1px dotted var(--line)}
+.lb{display:block;background:var(--lb);border-radius:8px;padding:7px 11px;font:italic 500 12px Fraunces,Georgia,serif;color:var(--red)}
+.lb:focus-within{outline:2px solid var(--red)}
+.lb input,.lb select,.lb textarea{display:block;width:100%;margin-top:3px;background:none;border:0;outline:0;font:400 14px Inter,sans-serif;color:var(--ink);resize:vertical}
+.lb option{color:#3b0d11}
+.ck{display:flex;gap:6px;align-items:center;font-size:13px;padding-bottom:9px}
+.tk{display:flex;gap:6px;padding-bottom:3px}
+.add{margin-top:14px;background:var(--y);color:#3b0d11;border-color:#ddcf00}
+.site{background:#F7F4EC;color:#3b0d11;border-radius:18px;padding:22px;margin-top:12px;max-height:78vh;overflow:auto}
+.site h2,.site h3{margin:0;font-family:Fraunces,Georgia,serif;font-weight:500}
+.ttl{text-align:center;font-size:30px;margin-bottom:16px}
+.board{background:#fff;border:1px solid #ece4d3;border-radius:22px;padding:22px;columns:250px 2;column-gap:40px}
+.spc{break-inside:avoid;background:radial-gradient(circle at 85% 0,#c2303c,#A31F2A 60%);color:#fff;border-radius:18px;padding:22px;margin-bottom:28px}
+.spc em{font:600 10px Inter,sans-serif;font-style:normal;letter-spacing:.25em;text-transform:uppercase;color:#FFEF3F}
+.spc h2{font:italic 500 24px/1.15 Fraunces,Georgia,serif;margin:8px 0 12px}
+.spc b{display:block;font:700 12px Inter,sans-serif;letter-spacing:.08em;margin-bottom:6px}
+.spc p{margin:0;font-size:11px;line-height:1.7;text-transform:uppercase;letter-spacing:.04em}
+.spc .p2{display:inline-block;margin-top:12px;background:#FFEF3F;color:#3b0d11;border-radius:999px;padding:4px 14px;font:700 12px Inter,sans-serif}
+.sec{break-inside:avoid;margin-bottom:30px}
+.sec h3{font-size:26px;color:#A31F2A;margin-bottom:12px}
+.r{display:flex;align-items:center;gap:10px;margin-bottom:12px;font:700 12px Inter,sans-serif;text-transform:uppercase;color:#A31F2A}
+.r i{flex:1;min-width:10px;border-top:1.5px dotted rgba(163,31,42,.4)}
+.r .p{border:1.5px solid #A31F2A;border-radius:999px;padding:3px 10px;white-space:nowrap}
+.vg{background:#A31F2A;color:#fff;border-radius:999px;padding:2px 8px;font-size:9px;margin-left:8px}
+.fch{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.pc{padding:6px 14px;border:1px solid #ddd2cb;border-radius:999px;background:#fff;color:#3b0d11;font-size:12px}
+.pc.on,.pc:hover{background:#FFEF3F;border-color:#ddcf00}
+.trk{display:flex;gap:16px;overflow-x:auto;padding-bottom:8px}
+.dc{flex:0 0 190px}
+.tile{aspect-ratio:1/.82;border-radius:16px;background:radial-gradient(circle at 50% 40%,#6b2a1b,#240c0b 75%);display:grid;place-items:center}
+.tile span{width:46%;aspect-ratio:1;border:2px solid rgba(255,239,63,.5);border-radius:50%;display:grid;place-items:center;font:500 28px Fraunces,Georgia,serif;color:#FFEF3F}
+.nm{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font:600 15px Fraunces,Georgia,serif}
+.tm{font-size:12px;color:#6e5a5b}
+.recs{display:flex;gap:14px;flex-wrap:wrap;background:#FFEF3F;border-radius:22px;padding:18px;margin-top:22px}
+.mini{flex:1 1 220px;display:flex;gap:12px;align-items:center;background:#fff;border-radius:14px;padding:12px}
+.mini .tile{width:56px;aspect-ratio:1;flex:none;border-radius:10px}
+.mini .tile span{font-size:18px;border-width:1px}
+.mini b{display:block;font:600 14px Fraunces,Georgia,serif}
+.mini small{display:block;font-size:11px;color:#6e5a5b;line-height:1.35}
+.mini em{font-style:normal;font-size:11px}
+.mini .pr{margin-left:auto;font:600 13px Fraunces,Georgia,serif;align-self:flex-start}
+@media(max-width:900px){.app{grid-template-columns:1fr;padding:14px}.sw{display:flex}.app[data-v="a"] .pv{display:none}.app[data-v="s"] .adm{display:none}.top{padding:14px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div><b>Biryani Ghar</b><small>Admin demo. Change anything on the left and the site preview updates at once. No server is used; your edits are saved in this browser only.</small></div>
+  <div class="acts"><button class="btn" id="ex" type="button">Download data file</button><button class="btn" id="rs" type="button">Reset demo</button></div>
+</header>
+<div class="sw" id="sw"><button class="btn on" data-v="a" type="button">Admin</button><button class="btn" data-v="s" type="button">Live site</button></div>
+<div class="app" id="app" data-v="a">
+  <section class="card adm">
+    <h2>Admin</h2>
+    <p class="note">Pick what to edit. Dish photos are placeholders in this demo.</p>
+    <div class="nav" id="nav">
+      <button class="btn on" data-sec="menu" type="button">Menu dishes</button><button class="btn" data-sec="spc" type="button">Chef's special</button><button class="btn" data-sec="recs" type="button">Recommendations</button><button class="btn" data-sec="home" type="button">Homepage cuisine</button>
+    </div>
+    <div id="pane"></div>
+  </section>
+  <section class="card pv">
+    <h2>Live site</h2>
+    <div class="nav" id="pt" style="margin:8px 0 0"><button class="btn on" data-pv="menu" type="button">Menu page</button><button class="btn" data-pv="home" type="button">Homepage</button></div>
+    <div class="site" id="site"></div>
+  </section>
+</div>
+<script>
+(function(){
+'use strict';
+var KEY='bg_demo_v1',IMG='https://www.qissa.co.uk/wp-content/uploads/2026/08/mp-slide-0',
+CATS=[{id:'biryani',t:'Dum Biryani'},{id:'kebabs',t:'Kebabs & Tikkas'},{id:'curries',t:'Curries'},{id:'sides',t:'Breads & Sides'},{id:'desserts',t:'Desserts'},{id:'drinks',t:'Drinks'}],
+M={
+biryani:'Chicken Dum Biryani|349;Mutton Dum Biryani|449;Veg Dum Biryani|299|v;Egg Biryani|279;Prawn Biryani|499;Paneer Tikka Biryani|329|v;Hyderabadi Special Biryani|429',
+kebabs:'Seekh Kebab|299;Chicken Tikka|329;Malai Tikka|349;Hara Bhara Kebab|249|v;Paneer Tikka|279|v;Mutton Galouti|399;Tandoori Platter|649',
+curries:'Butter Chicken|379;Mutton Rogan Josh|459;Dal Makhani|269|v;Paneer Butter Masala|329|v;Chicken Korma|359;Kadhai Paneer|319|v',
+sides:'Butter Naan|59|v;Garlic Naan|79|v;Tandoori Roti|39|v;Boondi Raita|89|v;Mirchi ka Salan|99|v;Onion Salad|49|v',
+desserts:'Gulab Jamun|149|v;Phirni|129|v;Shahi Tukda|169|v;Double ka Meetha|159|v;Kulfi Falooda|179|v',
+drinks:'Masala Chaas|69|v;Sweet Lassi|89|v;Rose Sharbat|79|v;Fresh Lime Soda|79|v;Masala Chai|49|v;Soft Drinks|60|v'},
+H='Chicken Dum Biryani|349|35|biryani;Mutton Dum Biryani|449|45|biryani;Veg Dum Biryani|299|30|biryani;Seekh Kebab|299|20|kebabs;Chicken Tikka|329|25|kebabs;Butter Chicken|379|25|curries;Paneer Butter Masala|329|20|curries;Gulab Jamun|149|10|desserts;Phirni|129|10|desserts';
+var d=document,$=function(s){return d.querySelector(s)};
+function e(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function pr(p){p=String(p==null?'':p).trim();return p.charAt(0)==='₹'?p:'₹'+p}
+function defaults(){var m={};
+ CATS.forEach(function(c){m[c.id]=M[c.id].split(';').map(function(s){var a=s.split('|');return{n:a[0],p:'₹'+a[1],v:a[2]==='v'}})});
+ return{special:{on:true,label:"Chef's special of the month",name:'Zafrani Handi Biryani',badge:'NEW',desc:'Saffron-laced basmati layered with slow-braised mutton, caramelised onions and whole spices, sealed and cooked dum.',price:'₹549'},
+ menu:m,
+ home:H.split(';').map(function(s,i){var a=s.split('|');return{n:a[0],p:'₹'+a[1],t:a[2],c:a[3],img:IMG+(i+1)+'-768x768.webp'}}),
+ recs:[{n:'Family Handi Combo',d:'Perfect for four, with raita, salan and kebabs.',r:'4.8',p:'₹1,499',img:IMG+'2-768x768.webp'},{n:'Kebab Platter',d:'Seekh, tikka and malai, fresh off the grill.',r:'4.7',p:'₹799',img:IMG+'5-768x768.webp'}]}}
+function load(){var x=defaults(),s=null;
+ try{s=JSON.parse(localStorage.getItem(KEY))}catch(_){}
+ if(!s||typeof s!=='object')return x;
+ for(var k in x)if(s[k]==null)s[k]=x[k];
+ CATS.forEach(function(c){if(!s.menu[c.id])s.menu[c.id]=[]});
+ return s}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D))}catch(_){}}
+
+var D=load(),sec='menu',cat='biryani',pv='menu',pf='all';
+var NOTE={menu:'Edit dishes and prices on the Menu page.',spc:"The red feature card at the top of the Menu page.",recs:'The two combo cards on the homepage.',home:'The dishes in the homepage carousel.'};
+var F={
+ menu:[{k:'n',l:'Dish name',w:3},{k:'p',l:'Price',w:1},{k:'v',l:'Veg',t:'c'}],
+ home:[{k:'n',l:'Dish name',w:2},{k:'p',l:'Price',w:1},{k:'t',l:'Minutes',w:1},{k:'c',l:'Category',t:'s',w:2}],
+ recs:[{k:'n',l:'Name',w:2},{k:'p',l:'Price',w:1},{k:'r',l:'Rating',w:1},{k:'d',l:'Description',w:4}],
+ spc:[{k:'label',l:'Heading',w:2},{k:'name',l:'Dish name',w:2},{k:'badge',l:'Badge (blank for none)',w:1},{k:'price',l:'Price',w:1},{k:'desc',l:'Description',t:'a',w:6}]};
+function arr(){return sec==='menu'?D.menu[cat]:sec==='home'?D.home:D.recs}
+
+function fld(f,o){var v=o[f.k];
+ if(f.t==='c')return'<label class="ck"><input type="checkbox" data-k="'+f.k+'"'+(v?' checked':'')+'> '+f.l+'</label>';
+ var h='<label class="lb" style="flex:'+f.w+' 1 '+(f.w>2?'200':'90')+'px">'+f.l;
+ if(f.t==='s')h+='<select data-k="'+f.k+'">'+CATS.map(function(c){return'<option value="'+c.id+'"'+(c.id===v?' selected':'')+'>'+e(c.t)+'</option>'}).join('')+'</select>';
+ else if(f.t==='a')h+='<textarea rows="3" data-k="'+f.k+'">'+e(v)+'</textarea>';
+ else h+='<input type="text" data-k="'+f.k+'" value="'+e(v)+'">';
+ return h+'</label>'}
+function rowH(o,i){return'<div class="rw" data-i="'+i+'">'+F[sec].map(function(f){return fld(f,o)}).join('')+
+ (sec==='recs'?'':'<div class="tk"><button class="btn" data-act="up" aria-label="Move up" type="button">Up</button><button class="btn" data-act="dn" aria-label="Move down" type="button">Down</button><button class="btn" data-act="del" type="button">Remove</button></div>')+'</div>'}
+function adm(){var h='';
+ [].forEach.call(d.querySelectorAll('[data-sec]'),function(b){b.classList.toggle('on',b.dataset.sec===sec)});
+ if(sec==='spc')h='<label class="ck"><input type="checkbox" data-k="on"'+(D.special.on!==false?' checked':'')+'> Show the chef\'s special on the Menu page</label><div class="rw">'+F.spc.map(function(f){return fld(f,D.special)}).join('')+'</div>';
+ else{
+  if(sec==='menu')h+='<div class="nav">'+CATS.map(function(c){return'<button class="btn'+(c.id===cat?' on':'')+'" data-cat="'+c.id+'" type="button">'+e(c.t)+'</button>'}).join('')+'</div>';
+  h+=arr().map(rowH).join('');
+  if(sec!=='recs')h+='<button class="btn add" data-act="add" type="button">+ Add '+(sec==='menu'?'dish':'to homepage')+'</button>';
+ }
+ $('#pane').innerHTML='<p class="note">'+NOTE[sec]+'</p>'+h}
+
+function tile(n){return'<div class="tile"><span>'+e(String(n).trim().charAt(0).toUpperCase())+'</span></div>'}
+function row(o){return'<div class="r"><span>'+e(o.n)+(o.v?'<span class="vg">VEG</span>':'')+'</span><i></i><span class="p">'+e(pr(o.p))+'</span></div>'}
+function site(){var s=D.special,h='';
+ [].forEach.call(d.querySelectorAll('[data-pv]'),function(b){b.classList.toggle('on',b.dataset.pv===pv)});
+ if(pv==='menu'){
+  h='<div class="board">'+(s.on!==false?'<div class="spc"><em>'+e(s.label)+'</em><h2>'+e(s.name)+'</h2>'+(s.badge?'<b>'+e(s.badge)+'</b>':'')+'<p>'+e(s.desc)+'</p><span class="p2">'+e(pr(s.price))+'</span></div>':'')+
+  CATS.map(function(c){var it=D.menu[c.id];return it.length?'<div class="sec"><h3>'+e(c.t)+'</h3>'+it.map(row).join('')+'</div>':''}).join('')+'</div>';
+ }else{
+  var have=CATS.filter(function(c){return D.home.some(function(o){return o.c===c.id})});
+  if(pf!=='all'&&!have.some(function(c){return c.id===pf}))pf='all';
+  h='<h2 class="ttl">Explore Our Cuisine</h2><div class="fch"><button class="pc'+(pf==='all'?' on':'')+'" data-f="all" type="button">All</button>'+
+  have.map(function(c){return'<button class="pc'+(pf===c.id?' on':'')+'" data-f="'+c.id+'" type="button">'+e(c.t)+'</button>'}).join('')+'</div><div class="trk">'+
+  D.home.filter(function(o){return pf==='all'||o.c===pf}).map(function(o){return'<article class="dc">'+tile(o.n)+'<div class="nm"><span>'+e(o.n)+'</span><span>'+e(pr(o.p))+'</span></div><div class="tm">'+e(o.t)+' Mins</div></article>'}).join('')+'</div>'+
+  '<div class="recs">'+D.recs.map(function(r){return'<div class="mini">'+tile(r.n)+'<div><b>'+e(r.n)+'</b><small>'+e(r.d)+'</small><em>★ '+e(r.r)+'</em></div><span class="pr">'+e(pr(r.p))+'</span></div>'}).join('')+'</div>';
+ }
+ $('#site').innerHTML=h}
+
+$('#pane').addEventListener('input',function(ev){var t=ev.target,k=t.dataset.k;if(!k)return;
+ var rw=t.closest('.rw'),o=sec==='spc'?D.special:arr()[+rw.dataset.i];
+ o[k]=t.type==='checkbox'?t.checked:t.value;save();site()});
+$('#pane').addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;
+ if(b.dataset.cat){cat=b.dataset.cat;adm();return}
+ var a=b.dataset.act,rw=b.closest('.rw'),i=rw?+rw.dataset.i:-1,A=arr();
+ if(a==='add')A.push(sec==='menu'?{n:'New dish',p:'₹',v:false}:{n:'New dish',p:'₹',t:'30',c:'biryani',img:''});
+ else if(a==='del')A.splice(i,1);
+ else if(a==='up'&&i>0)A.splice(i-1,0,A.splice(i,1)[0]);
+ else if(a==='dn'&&i<A.length-1)A.splice(i+1,0,A.splice(i,1)[0]);
+ else return;
+ save();adm();site()});
+$('#nav').addEventListener('click',function(ev){var b=ev.target.closest('[data-sec]');if(!b)return;
+ sec=b.dataset.sec;pv=(sec==='menu'||sec==='spc')?'menu':'home';adm();site()});
+$('#pt').addEventListener('click',function(ev){var b=ev.target.closest('[data-pv]');if(!b)return;pv=b.dataset.pv;site()});
+$('#site').addEventListener('click',function(ev){var b=ev.target.closest('[data-f]');if(!b)return;pf=b.dataset.f;site()});
+$('#sw').addEventListener('click',function(ev){var b=ev.target.closest('[data-v]');if(!b)return;
+ $('#app').dataset.v=b.dataset.v;[].forEach.call(d.querySelectorAll('#sw .btn'),function(x){x.classList.toggle('on',x===b)})});
+$('#rs').onclick=function(){if(!confirm('Reset the demo to the original menu?'))return;
+ try{localStorage.removeItem(KEY)}catch(_){}D=defaults();pf='all';adm();site()};
+$('#ex').onclick=function(){var a=d.createElement('a');
+ a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,1)],{type:'application/json'}));a.download='biryani-ghar-data.json';a.click()};
+adm();site();
+})();
+</script>
+</body>
+</html>

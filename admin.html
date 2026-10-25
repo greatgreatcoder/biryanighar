@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Admin — Biryani Ghar</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--red:#A31F2A;--mar:#3b0d11;--y:#FFEF3F;--cr:#F3ECD6;--mut:#6e5a5b}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:400 15px/1.5 Inter,system-ui,sans-serif;background:#F7F4EC;color:var(--mar)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+[hidden]{display:none!important}
+h1{font:400 38px/1.1 Fraunces,Georgia,serif;color:var(--red)}
+.card{background:#fff;border:1px solid #ece4d3;border-radius:24px;padding:26px;box-shadow:0 24px 60px -34px rgba(59,13,17,.35)}
+#lock{min-height:100vh;display:grid;place-items:center;padding:20px}
+#lf{width:min(380px,100%);display:grid;gap:14px}
+.shell{display:flex;min-height:100vh}
+aside{width:240px;flex:none;background:var(--mar);padding:30px 18px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh;overflow-y:auto}
+.logo{font:500 22px 'Cormorant Garamond',Georgia,serif;letter-spacing:.3em;color:#e89026;text-transform:uppercase;padding:0 8px}
+.sub{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:#d9c9a8;padding:0 8px 22px}
+.nv{display:block;width:100%;text-align:left;padding:12px 16px;border:0;border-radius:12px;background:none;color:var(--cr);font-size:14px;text-decoration:none}
+.nv:hover{background:rgba(255,255,255,.1)}
+.nv.on{background:var(--y);color:var(--mar);font-weight:600}
+main{flex:1;min-width:0;padding:36px 40px;display:flex;flex-direction:column;gap:22px}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.hd p{margin-top:8px;font-size:14px;color:var(--mut)}
+.sm{display:inline-block;border:1px solid #ddd2cb;background:#fff;border-radius:999px;padding:8px 16px;font-size:13px;font-weight:500;color:var(--mar);text-decoration:none}
+.sm:hover{background:var(--y)}
+.add{margin-top:16px;background:var(--y);border-color:#ddcf00}
+.pb{background:var(--red);color:#fff;border:0;border-radius:999px;padding:13px 26px;font-size:14px;font-weight:600}
+.pb:hover{background:var(--mar)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.chip{padding:8px 16px;border:1.5px solid var(--red);border-radius:999px;background:none;color:var(--red);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.chip.on,.chip:hover{background:var(--y);color:var(--mar)}
+.rw{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;padding:14px 0;border-bottom:1px dotted rgba(163,31,42,.35)}
+.lb{display:block;background:#EFE9DA;border-radius:8px;padding:8px 12px;font:italic 500 12px Fraunces,Georgia,serif;color:var(--red)}
+.lb:focus-within{outline:2px solid var(--red)}
+.lb input,.lb select,.lb textarea{display:block;width:100%;margin-top:3px;background:none;border:0;outline:0;font:400 14px Inter,sans-serif;color:var(--mar);resize:vertical}
+.ck{display:flex;gap:6px;align-items:center;font-size:13px;padding-bottom:10px}
+.tl{display:flex;gap:6px;padding-bottom:4px}
+#st{font-size:13px;color:var(--mut)}
+@media(max-width:860px){.shell{flex-direction:column}aside{width:auto;height:auto;position:static;flex-direction:row;flex-wrap:wrap}.sub{display:none}main{padding:24px 18px}}
+</style>
+</head>
+<body>
+
+<div id="lock" hidden>
+  <form class="card" id="lf">
+    <h1 style="font-size:30px">Admin sign-in</h1>
+    <label class="lb">Password<input type="password" id="pw" autocomplete="current-password" required></label>
+    <button class="pb" type="submit">Sign in</button>
+    <p id="le" role="alert" style="color:var(--red);font-size:13px"></p>
+  </form>
+</div>
+
+<div class="shell" id="app" hidden>
+  <aside>
+    <div class="logo">Biryani Ghar</div>
+    <div class="sub">Admin panel</div>
+    <button class="nv on" data-sec="menu">Menu dishes</button>
+    <button class="nv" data-sec="spc">Chef's special</button>
+    <button class="nv" data-sec="recs">Recommendations</button>
+    <button class="nv" data-sec="home">Homepage cuisine</button>
+    <div style="flex:1"></div>
+    <a class="nv" href="index.html" target="_blank" rel="noopener">View live site</a>
+    <button class="nv" id="ex">Export backup</button>
+    <button class="nv" id="im">Import backup</button>
+    <input type="file" id="fi" accept="application/json" hidden>
+    <button class="nv" id="rs">Reset to original</button>
+    <button class="nv" id="lo">Log out</button>
+  </aside>
+  <main>
+    <header class="hd">
+      <div><h1 id="ti"></h1><p id="su"></p></div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <span id="st" role="status"></span>
+        <a class="sm" href="index.html#/menu" target="_blank" rel="noopener">Preview menu</a>
+        <button class="pb" id="pub" type="button">Publish changes</button>
+      </div>
+    </header>
+    <section class="card" id="pane"></section>
+  </main>
+</div>
+
+<script src="js/store.js"></script>
+<script>
+/* ===== CHANGE THIS PASSWORD before you upload the site =====
+   This is a simple lock that keeps casual visitors out. Anyone who views this file's source can read it,
+   so it is not real security. For that you need a server-side login. */
+var PASSWORD='biryani123';
+/* ============================================================ */
+(function(){
+'use strict';
+var d=document,$=function(s){return d.querySelector(s)},e=BG.e,D=BG.load(),sec='menu',cat='biryani',dirty=false;
+var T={
+ menu:['Menu dishes','Edit dishes and prices on the Menu page.'],
+ spc:["Chef's special",'The red feature card at the top of the Menu page.'],
+ recs:['Recommendations','The two combo cards on the homepage.'],
+ home:['Homepage: Explore Our Cuisine','The dishes in the homepage carousel.']};
+var F={
+ menu:[{k:'n',l:'Dish name',w:3},{k:'p',l:'Price',w:1},{k:'v',l:'Veg',t:'c'}],
+ home:[{k:'n',l:'Dish name',w:2},{k:'p',l:'Price',w:1},{k:'t',l:'Minutes',w:1},{k:'c',l:'Category',t:'s',w:1},{k:'img',l:'Photo URL',w:4}],
+ recs:[{k:'n',l:'Name',w:2},{k:'p',l:'Price',w:1},{k:'r',l:'Rating',w:1},{k:'d',l:'Description',w:4},{k:'img',l:'Photo URL',w:4}],
+ spc:[{k:'label',l:'Heading',w:2},{k:'name',l:'Dish name',w:2},{k:'badge',l:'Badge (blank for none)',w:1},{k:'price',l:'Price',w:1},{k:'desc',l:'Description',t:'a',w:6}]};
+
+function arr(){return sec==='menu'?D.menu[cat]:sec==='home'?D.home:D.recs}
+function mark(v){dirty=v;$('#st').textContent=v?'Unpublished changes':'All changes published'}
+
+function fld(f,o){
+ var v=o[f.k];
+ if(f.t==='c')return'<label class="ck"><input type="checkbox" data-k="'+f.k+'"'+(v?' checked':'')+'> '+f.l+'</label>';
+ var h='<label class="lb" style="flex:'+f.w+' 1 '+(f.w>2?'220':'100')+'px">'+f.l;
+ if(f.t==='s')h+='<select data-k="'+f.k+'">'+BG.CATS.map(function(c){return'<option value="'+c.id+'"'+(c.id===v?' selected':'')+'>'+e(c.t)+'</option>'}).join('')+'</select>';
+ else if(f.t==='a')h+='<textarea rows="3" data-k="'+f.k+'">'+e(v)+'</textarea>';
+ else h+='<input type="text" data-k="'+f.k+'" value="'+e(v)+'">';
+ return h+'</label>';
+}
+function rowH(o,i){
+ return'<div class="rw" data-i="'+i+'">'+F[sec].map(function(f){return fld(f,o)}).join('')+
+ (sec==='recs'?'':'<div class="tl"><button class="sm" data-act="up" aria-label="Move up">Up</button><button class="sm" data-act="dn" aria-label="Move down">Down</button><button class="sm" data-act="del">Remove</button></div>')+'</div>';
+}
+function draw(){
+ $('#ti').textContent=T[sec][0];$('#su').textContent=T[sec][1];
+ [].forEach.call(d.querySelectorAll('[data-sec]'),function(b){b.classList.toggle('on',b.dataset.sec===sec)});
+ var h='';
+ if(sec==='spc'){
+  h='<label class="ck"><input type="checkbox" data-k="on"'+(D.special.on!==false?' checked':'')+'> Show the chef\'s special on the Menu page</label><div class="rw">'+F.spc.map(function(f){return fld(f,D.special)}).join('')+'</div>';
+ }else{
+  if(sec==='menu')h+='<div class="chips">'+BG.CATS.map(function(c){return'<button class="chip'+(c.id===cat?' on':'')+'" data-cat="'+c.id+'">'+e(c.t)+'</button>'}).join('')+'</div>';
+  h+=arr().map(rowH).join('');
+  if(sec!=='recs')h+='<button class="sm add" data-act="add">+ Add '+(sec==='menu'?'dish':'to homepage')+'</button>';
+ }
+ $('#pane').innerHTML=h;
+}
+
+var pane=$('#pane');
+pane.addEventListener('input',function(ev){
+ var t=ev.target,k=t.dataset.k;if(!k)return;
+ var rw=t.closest('.rw'),o=sec==='spc'?D.special:arr()[+rw.dataset.i];
+ o[k]=t.type==='checkbox'?t.checked:t.value;mark(true);
+});
+pane.addEventListener('click',function(ev){
+ var b=ev.target.closest('button');if(!b)return;
+ if(b.dataset.cat){cat=b.dataset.cat;draw();return}
+ var a=b.dataset.act,rw=b.closest('.rw'),i=rw?+rw.dataset.i:-1,A=arr();
+ if(a==='add')A.push(sec==='menu'?{n:'',p:'₹',v:false}:{n:'',p:'₹',t:'30',c:'biryani',img:''});
+ else if(a==='del'){if(!confirm('Remove this item?'))return;A.splice(i,1)}
+ else if(a==='up'&&i>0)A.splice(i-1,0,A.splice(i,1)[0]);
+ else if(a==='dn'&&i<A.length-1)A.splice(i+1,0,A.splice(i,1)[0]);
+ else return;
+ mark(true);draw();
+});
+[].forEach.call(d.querySelectorAll('[data-sec]'),function(b){b.onclick=function(){sec=b.dataset.sec;draw()}});
+
+$('#pub').onclick=function(){
+ BG.CATS.forEach(function(c){D.menu[c.id]=D.menu[c.id].filter(function(o){return o.n.trim()})});
+ D.home=D.home.filter(function(o){return o.n.trim()});
+ if(BG.save(D)){mark(false);draw()}else alert('Could not save: this browser is blocking site storage.');
+};
+$('#ex').onclick=function(){
+ var a=d.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,1)],{type:'application/json'}));
+ a.download='biryani-ghar-data.json';a.click();
+};
+$('#im').onclick=function(){$('#fi').click()};
+$('#fi').onchange=function(){
+ var f=this.files[0],inp=this;if(!f)return;
+ var r=new FileReader();
+ r.onload=function(){
+  try{var x=JSON.parse(r.result);if(!x.menu||!x.home)throw 0;BG.save(x);D=BG.load();mark(false);draw()}
+  catch(_){alert('That file is not a Biryani Ghar backup.')}
+  inp.value='';
+ };
+ r.readAsText(f);
+};
+$('#rs').onclick=function(){if(confirm('Reset everything to the original menu? This removes all your published edits.')){BG.reset();D=BG.load();mark(false);draw()}};
+
+function show(ok){$('#lock').hidden=ok;$('#app').hidden=!ok;if(ok)draw();else $('#pw').focus()}
+$('#lf').onsubmit=function(ev){
+ ev.preventDefault();
+ if($('#pw').value===PASSWORD){sessionStorage.setItem('bgAdmin','1');show(true)}
+ else $('#le').textContent='Wrong password.';
+};
+$('#lo').onclick=function(){sessionStorage.removeItem('bgAdmin');location.reload()};
+addEventListener('beforeunload',function(ev){if(dirty){ev.preventDefault();ev.returnValue=''}});
+show(sessionStorage.getItem('bgAdmin')==='1');
+})();
+</script>
+</body>
+</html>
